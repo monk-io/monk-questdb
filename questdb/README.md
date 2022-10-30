@@ -13,14 +13,14 @@ Start `monkd` and login.
 monk login --email=<email> --password=<password>
 ```
 
-## Clone Monk ELK repository
+## Clone Monk QuestDB repository
 
 In order to load templates and change configuration simply use below commands: 
 ```bash
-git clone https://github.com/kaganmersin/monk-elk
+git clone https://github.com/kaganmersin/monk-questdb
 
-# and change directory to the monk-elk template folder
-cd monk-elk
+# and change directory to the monk-questdb/questdb template folder
+cd monk-questdb/questdb
 
 ```
 
@@ -28,35 +28,22 @@ cd monk-elk
 
 You can add/remove configuration of the template.
 
-The current variables can be found in `elk/variables` section
+The current variables can be found in `questdb/stack/variables` section
 
 ```yaml
   variables:
-    elasticsearch-image-tag: 7.9.0
-    elasticsearch-jvm-options: "-Xmx256m -Xms256m"
-    elasticsearch-http-port: 9200
-    elasticsearch-internal-port: 9300
-    kibana-http-port: 5601
-    kibana-image-tag: 7.9.0
-    logstash-image-tag: 7.17.5
-    logstash-jvm-options: "-Xmx256m -Xms256m"   
-    logstash-http-port: 9600
-    nginx-listen-port: 8080
-    nginx-image-tag: "latest"
-    kibana-server-name: "kibana.example.com"  
+    questdb-image-tag: 6.5.4
 ```
 
-### ELK Stack configuration files
+### QuestDB configuration files
 
-You can find configuration files in `/files` directory in repository and can edit before the running kit. There are 4 configuration files which bind to the container while run monk-elk kit 
+You can find configuration files in `/files` directory in repository and can edit before the running kit. There are 2 configuration files which bind to the container while run monk-questdb kit 
 
 
 | Configuration File	 | Format Used | Directory in Container | Purpose 
 |----------|-------------|------|---------|
-| **elasticsearch.yml** | yaml | ` /usr/share/elasticsearch/config/elasticsearch.yml` | Primary configuration file for Elasticsearch
-| **kibana.yml** | yaml | `/usr/share/kibana/config/kibana.yml` | The Kibana server reads properties from the kibana.yml file on startup. | 
-| **logstash.yml** | yaml | `/usr/share/logstash/config/logstash.yml` | You can set options in the Logstash settings file, logstash.yml, to control Logstash execution |
-| **pipeline/logstash.conf** | configuration file | `/usr/share/logstash/pipeline/logstash.conf` | You can create a pipeline by stringing together plugins, inputs, outputs, filters, and sometimes codecs in order to process data. |
+| **log.conf** | conf | `/var/lib/questdb/conf/log.conf` |  Configuration file for QuestDB log settings
+| **server.conf** | conf | `/var/lib/questdb/conf/server.conf` | Primer configuration file for QuestDB server | 
 
 
 
@@ -66,18 +53,7 @@ You can find configuration files in `/files` directory in repository and can edi
 
 | Variable | Description | Type | Example |
 |----------|-------------|------|---------|
-| **elasticsearch-image-tag** | Elasticsearch image version. | string | 7.9.0 |
-| **elasticsearch-jvm-options** | Elasticsearch jvm options. | string | "-Xmx256m -Xms256m" |
-| **elasticsearch-http-port** | Elasticsearch port that will accept requests | int | 9200
-| **elasticsearch-internal-port** | Elasticsearch custom port for the node to node communication | int | 9300
-| **kibana-http-port** | Kibana http port for UI | int | 9300 |
-| **kibana-image-tag** | Kibana image version. | string | 7.9.0 |
-| **logstash-image-tag** | Logstash image version. | string | 7.17.5 |
-| **logstash-jvm-options** | Logstash jvm options. | string | "-Xmx256m -Xms256m" |
-| **logstash-http-port** | Logstash port that will accept requests | int | 9600
-| **nginx-listen-port** | Configures the ports that the nginx listens on. | int | 80 |
-| **nginx-image-tag** | Nginx image version. | string | latest |
-| **kibana-server-name** | Fqdn that nginx will accept and route to. | string | kibana.example.com |
+| **questdb-image-tag** | QuestDB image version. | string | 6.5.4 |
 
 
 
@@ -91,40 +67,28 @@ First clone the repository simply run below command after launching `monkd`:
 
 ✨ Loaded:
  ├─🔩 Runnables:
- │  ├─🧩 elk/logstash
- │  ├─🧩 elk/nginx
- │  ├─🧩 elk/elasticsearch
- │  └─🧩 elk/kibana
+ │  └─🧩 questdb/questdb
  ├─🔗 Process groups:
- │  └─🧩 elk/stack
+ │  └─🧩 questdb/stack
  └─⚙️ Entity instances:
-    ├─🧩 elk/logstash/metadata
-    ├─🧩 elk/kibana/metadata
-    └─🧩 elk/elasticsearch/metadata
+    └─🧩 questdb/questdb/metadata
 ✔ All templates loaded successfully
 
 ➜  monk list -l elk
 
 ✔ Got the list
-✔ Got the list
-Type      Template                         Repository  Version      Tags
-runnable  elk/elasticsearch                local       -            self hosted, search platform,
-runnable  elk/kibana                       local       -            self hosted, visualization, monitoring
-runnable  elk/logstash                     local       -            self hosted, data processing pipeline, logging
-runnable  elk/nginx                        local       -            -
-group     elk/stack                        local       -            -
-runnable  nginx/latest                     elk         -            -
-runnable  nginx/reverse-proxy              elk         -            -
-runnable  nginx/reverse-proxy-ssl-certbot  elk         1.15-alpine  -
+Type      Template         Repository  Version  Tags
+runnable  questdb/questdb  local       -        -
+group     questdb/stack    local       -        -
 
 
-➜  monk run --local-only elk/stack
+➜  monk run  questdb/stack
 
-✔ Started local/elk/stack
+✔ Started local/questdb/stack
 
 ```
 
-This will start the entire elk/stack with a Nginx reverse proxy. 
+This will start the entire questdb/stack with a Nginx reverse proxy. 
 
 
 ## Cloud Deployment
@@ -133,7 +97,7 @@ To deploy the above system to your cloud provider, create a new Monk cluster and
 
 ```bash
 ➜  monk cluster new
-? New cluster name elkstack
+? New cluster name questdb
 ✔ Cluster created
 Your cluster has been created successfully.
 
@@ -142,8 +106,8 @@ Your cluster has been created successfully.
 
 ➜  monk cluster grow -p gcp
 ? Cloud provider gcp
-? Name of the new instance elk-instance
-? Tags (split by whitespace) elkstack
+? Name of the new instance questdb-instance
+? Tags (split by whitespace) questdb
 ? Region europe-central2
 ? Zone europe-central2-a
 ? Instance type e2-medium
@@ -168,84 +132,51 @@ Your cluster has been created successfully.
 ```
 
 Once cluster is ready execute the same command as for local and select your cluster (the option will appear automatically).
+
+
 ```bash
 ➜  monk load MANIFEST
 
 ✨ Loaded:
  ├─🔩 Runnables:
- │  ├─🧩 elk/logstash
- │  ├─🧩 elk/nginx
- │  ├─🧩 elk/elasticsearch
- │  └─🧩 elk/kibana
+ │  └─🧩 questdb/questdb
  ├─🔗 Process groups:
- │  └─🧩 elk/stack
+ │  └─🧩 questdb/stack
  └─⚙️ Entity instances:
-    ├─🧩 elk/logstash/metadata
-    ├─🧩 elk/kibana/metadata
-    └─🧩 elk/elasticsearch/metadata
+    └─🧩 questdb/questdb/metadata
 ✔ All templates loaded successfully
 
 ➜  monk list -l elk
 
 ✔ Got the list
-✔ Got the list
-Type      Template                         Repository  Version      Tags
-runnable  elk/elasticsearch                local       -            self hosted, search platform,
-runnable  elk/kibana                       local       -            self hosted, visualization, monitoring
-runnable  elk/logstash                     local       -            self hosted, data processing pipeline, logging
-runnable  elk/nginx                        local       -            -
-group     elk/stack                        local       -            -
-runnable  nginx/latest                     elk         -            -
-runnable  nginx/reverse-proxy              elk         -            -
-runnable  nginx/reverse-proxy-ssl-certbot  elk         1.15-alpine  -
+Type      Template         Repository  Version  Tags
+runnable  questdb/questdb  local       -        -
+group     questdb/stack    local       -        -
 
 
-➜  monk run --local-only elk/stack
+➜  monk run  questdb/stack
 
-✔ Started local/elk/stack
-
+✔ Started local/questdb/stack
 
 ```
 
 ## Logs & Shell
 
 ```bash
-# show Elasticsearch logs
-➜  monk logs -l 1000 -f elk/elasticsearch
+# show QuestDB logs
+➜  monk logs -l 1000 -f questdb/questdb
 
-# show Kibana logs
-➜  monk logs -l 1000 -f elk/kibana
-
-# show Logstash logs
-➜  monk logs -l 1000 -f elk/logstash
-
-# show nginx logs
-➜  monk logs -l 1000 -f elk/nginx
-
-
-# access shell in the container running Elasticsearch
-➜  monk shell elk/elasticsearch
-
-# access shell in the container running Kibana
-➜  monk shell elk/kibana
-
-# access shell in the container running Logstash
-➜  monk shell elk/logstash
-
-# access shell in the container running Nginx
-➜  monk shell elk/nginx
+# access shell in the container running QuestDB
+➜  monk shell questdb/questdb
 
 ```
 
 ## Stop, remove and clean up workloads and templates
 
 ```bash
-➜ monk purge -x elk/stack elk/elasticsearch elk/kibana elk/logstash elk/nginx
+➜ monk purge -x questdb/stack questdb/questdb
 
-✔ elk/stack purged
-✔ elk/elasticsearch purged
-✔ elk/kibana purged
-✔ elk/logstash purged
-✔ elk/nginx purged
+✔ questdb/stack purged
+✔ questdb/questdb purged
 
 ```

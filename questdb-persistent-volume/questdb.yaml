@@ -1,0 +1,50 @@
+namespace: questdb
+
+
+questdb:
+  defines: runnable
+  # volumes:
+  #   questdb-data:
+  #     size: <- $persistent-volume-disk-capacity
+  #     kind: <- $persistent-volume-disk-type
+  #     path: <- $volume-data
+  metadata:
+    defines: metadata
+    name: QuestDB
+    description: QuestDB is an open-source time-series database for high throughput ingestion and fast SQL queries with operational simplicity
+    tags: database, SQL, open-source
+    website: https://github.com/questdb/questdb
+    source: https://github.com/questdb/questdb
+    publisher: "monk.io"
+    icon: https://camo.githubusercontent.com/1dd0de897170f514797a2f178d5fda1d1ea49ae8fb5965ebcc28a728837e4da8/68747470733a2f2f717565737464622e696f2f696d672f717565737464622d6c6f676f2d7468656d65642e737667
+  containers:
+    defines: containers
+    questdb:  
+      image: questdb/questdb:latest
+      image-tag: <- `${questdb-image}`
+      ports:
+      - 9000:9000
+      - 9009:9009
+      - 8812:8812
+      - 9003:9003
+      paths:
+        - <- `${volume-data}:/var/lib/questdb/db`
+  files:
+    server-config:
+      container: questdb
+      mode: 0644
+      path: /var/lib/questdb/conf/log.conf
+      contents: <<< files/log.conf
+    logging-config:
+      container: questdb
+      mode: 0644
+      path: /var/lib/questdb/conf/server.conf
+      contents: <<< files/server.conf
+  variables:
+    defines: variables
+    volume-data:
+      type: string
+      value: <- `${monk-volume-path}/questdb`
+    questdb-image:
+      value: <- $questdb-image-tag
+      type: string

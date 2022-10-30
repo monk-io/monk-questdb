@@ -74,7 +74,7 @@ First clone the repository simply run below command after launching `monkd`:
     └─🧩 questdb/questdb/metadata
 ✔ All templates loaded successfully
 
-➜  monk list -l elk
+➜  monk list -l questdb
 
 ✔ Got the list
 Type      Template         Repository  Version  Tags
@@ -146,7 +146,7 @@ Once cluster is ready execute the same command as for local and select your clus
     └─🧩 questdb/questdb/metadata
 ✔ All templates loaded successfully
 
-➜  monk list -l elk
+➜  monk list -l questdb
 
 ✔ Got the list
 Type      Template         Repository  Version  Tags

@@ -88,7 +88,7 @@ group     questdb/stack    local       -        -
 
 ```
 
-This will start the entire questdb/stack with a Nginx reverse proxy. 
+This will start the entire questdb/stack.
 
 
 ## Cloud Deployment

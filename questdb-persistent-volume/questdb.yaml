@@ -20,7 +20,7 @@ questdb:
   containers:
     defines: containers
     questdb:  
-      image: questdb/questdb:latest
+      image: questdb/questdb
       image-tag: <- `${questdb-image}`
       ports:
       - 9000:9000

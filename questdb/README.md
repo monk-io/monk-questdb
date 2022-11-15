@@ -17,7 +17,7 @@ monk login --email=<email> --password=<password>
 
 In order to load templates and change configuration simply use below commands: 
 ```bash
-git clone https://github.com/kaganmersin/monk-questdb
+git clone https://github.com/monk-io/monk-questdb
 
 # and change directory to the monk-questdb/questdb template folder
 cd monk-questdb/questdb

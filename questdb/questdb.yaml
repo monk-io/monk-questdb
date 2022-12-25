@@ -7,11 +7,32 @@ questdb:
     defines: metadata
     name: QuestDB
     description: 
-    tags: 
-    website: 
-    source: 
+    tags: database, sql
+    website: https://questdb.io/
+    source: https://github.com/questdb/questdb
     publisher: "monk.io"
-    icon: 
+    icon: https://questdb.io/img/questdb-logo-themed.svg
+  services:
+    questdb-9000:
+      container: questdb
+      port: 9000
+      protocol: tcp
+      host-port: 9000
+    questdb-9009:
+      container: questdb
+      port: 9009
+      protocol: tcp
+      host-port: 9009 
+    questdb-8812:
+      container: questdb
+      port: 8812
+      protocol: tcp
+      host-port: 8812 
+    questdb-9003:
+      container: questdb
+      port: 9003
+      protocol: tcp
+      host-port: 9003                   
   containers:
     defines: containers
     questdb:  

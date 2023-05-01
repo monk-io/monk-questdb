@@ -8,22 +8,18 @@ questdb:
       container: questdb
       port: 9000
       protocol: tcp
-      host-port: 9000
     questdb-9009:
       container: questdb
       port: 9009
       protocol: tcp
-      host-port: 9009 
     questdb-8812:
       container: questdb
       port: 8812
       protocol: tcp
-      host-port: 8812 
     questdb-9003:
       container: questdb
       port: 9003
       protocol: tcp
-      host-port: 9003   
   volumes:
     questdb-data:
       size: <- $persistent-volume-disk-capacity
@@ -43,11 +39,6 @@ questdb:
     questdb:  
       image: questdb/questdb
       image-tag: <- `${questdb-image}`
-      ports:
-      - 9000:9000
-      - 9009:9009
-      - 8812:8812
-      - 9003:9003
       paths:
         - <- `${volume-data}:/var/lib/questdb/db`
   files:

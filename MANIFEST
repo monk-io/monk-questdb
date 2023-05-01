@@ -1,2 +1,2 @@
 REPO monk-questbd
-DIR questbd questbd-persistent-volume
+DIR questdb questdb-persistent-volume

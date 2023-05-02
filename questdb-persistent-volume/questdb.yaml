@@ -60,7 +60,7 @@ questdb:
       value: <- `${monk-volume-path}/questdb`
     persistent-volume-disk-capacity:
       value: <- $persistent-volume-disk-size default("10")
-      type: string
+      type: int
     persistent-volume-disk-type:
       value: <- $persistent-volume-disk-kind default("HDD")
       type: string

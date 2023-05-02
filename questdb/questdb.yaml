@@ -13,10 +13,11 @@ questdb:
     publisher: "monk.io"
     icon: https://questdb.io/img/questdb-logo-themed.svg
   services:
-    questdb-9000:
+    questdb-web:
       container: questdb
       port: 9000
       protocol: tcp
+      host-port: 9000
     questdb-9009:
       container: questdb
       port: 9009

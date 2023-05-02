@@ -1,13 +1,14 @@
-namespace: questdb
+namespace: questdb-persistent-volume
 
 
 questdb:
   defines: runnable
   services:
-    questdb-9000:
+    questdb-web:
       container: questdb
       port: 9000
       protocol: tcp
+      host-port: 9000
     questdb-9009:
       container: questdb
       port: 9009
@@ -57,6 +58,12 @@ questdb:
     volume-data:
       type: string
       value: <- `${monk-volume-path}/questdb`
+    persistent-volume-disk-capacity:
+      value: <- $persistent-volume-disk-size default("10")
+      type: string
+    persistent-volume-disk-type:
+      value: <- $persistent-volume-disk-kind default("HDD")
+      type: string
     questdb-image:
-      value: <- $questdb-image-tag
+      value: <- $questdb-image-tag default("6.5.4")
       type: string

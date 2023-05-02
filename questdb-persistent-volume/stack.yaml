@@ -1,10 +1,16 @@
-namespace: questdb
+namespace: questdb-persistent-volume
 
 stack:
   defines: process-group
   runnable-list:
-    - questdb/questdb
+    - questdb-persistent-volume/questdb
   variables:
-    questdb-image-tag: 6.5.4
-    persistent-volume-disk-size: 10
-    persistent-volume-disk-kind: "HDD"
+    questdb-image-tag:
+      type: string
+      value: 6.5.4
+    persistent-volume-disk-size:
+      type: int
+      value: 10
+    persistent-volume-disk-kind:
+      type: string
+      value: HDD

@@ -1,0 +1,8 @@
+namespace: questdb
+
+stack:
+  defines: process-group
+  runnable-list:
+    - questdb/questdb
+  variables:
+    questdb-image-tag: 6.5.4

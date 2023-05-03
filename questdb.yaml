@@ -1,0 +1,54 @@
+namespace: questdb
+
+questdb:
+  defines: runnable
+  metadata:
+    defines: metadata
+    name: QuestDB
+    description: 
+    tags: database, sql
+    website: https://questdb.io/
+    source: https://github.com/questdb/questdb
+    publisher: "monk.io"
+    icon: https://questdb.io/img/questdb-logo-themed.svg
+  services:
+    questdb-web:
+      container: questdb
+      port: 9000
+      protocol: tcp
+      host-port: 9000
+    questdb-9009:
+      container: questdb
+      port: 9009
+      protocol: tcp
+    questdb-8812:
+      container: questdb
+      port: 8812
+      protocol: tcp
+    questdb-9003:
+      container: questdb
+      port: 9003
+      protocol: tcp                  
+  containers:
+    defines: containers
+    questdb:  
+      image: questdb/questdb
+      image-tag: <- `${questdb-image}`
+      paths:
+        - <- `${monk-volume-path}/questdb/db:/var/lib/questdb/db`
+  files:
+    server-config:
+      container: questdb
+      mode: 0644
+      path: /var/lib/questdb/conf/log.conf
+      contents: <<< files/log.conf
+    logging-config:
+      container: questdb
+      mode: 0644
+      path: /var/lib/questdb/conf/server.conf
+      contents: <<< files/server.conf
+  variables:
+    defines: variables
+    questdb-image:
+      value: <- $questdb-image-tag
+      type: string

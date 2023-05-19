@@ -2,10 +2,9 @@
 
 This repository contains Monk.io template to deploy QuestDB system either locally or on cloud of your choice (AWS, GCP, Azure, Digital Ocean).
 
-
 ## Start
 
-Set up Monk - https://docs.monk.io/docs/monk-in-10/
+Set up Monk - [https://docs.monk.io/docs/monk-in-10/](https://docs.monk.io/docs/monk-in-10/)
 
 Start `monkd` and login.
 
@@ -15,7 +14,8 @@ monk login --email=<email> --password=<password>
 
 ## Clone Monk QuestDB repository
 
-In order to load templates and change configuration simply use below commands: 
+In order to load templates and change configuration simply use below commands:
+
 ```bash
 git clone https://github.com/monk-io/monk-questdb
 
@@ -37,30 +37,23 @@ The current variables can be found in `questdb/stack/variables` section
 
 ### QuestDB configuration files
 
-You can find configuration files in `/files` directory in repository and can edit before the running kit. There are 2 configuration files which bind to the container while run monk-questdb kit 
+You can find configuration files in `/files` directory in repository and can edit before the running kit. There are 2 configuration files which bind to the container while run monk-questdb kit
 
+| Configuration File | Format Used | Directory in Container              | Purpose                                      |
+| ------------------ | ----------- | ----------------------------------- | -------------------------------------------- |
+| **log.conf**       | conf        | `/var/lib/questdb/conf/log.conf`    | Configuration file for QuestDB log settings  |
+| **server.conf**    | conf        | `/var/lib/questdb/conf/server.conf` | Primer configuration file for QuestDB server |
 
-| Configuration File	 | Format Used | Directory in Container | Purpose 
-|----------|-------------|------|---------|
-| **log.conf** | conf | `/var/lib/questdb/conf/log.conf` |  Configuration file for QuestDB log settings
-| **server.conf** | conf | `/var/lib/questdb/conf/server.conf` | Primer configuration file for QuestDB server | 
+## Template variables
 
-
-
-
-
-##  Template variables
-
-| Variable | Description | Type | Example |
-|----------|-------------|------|---------|
-| **questdb-image-tag** | QuestDB image version. | string | 6.5.4 |
-
-
+| Variable              | Description            | Type   | Example |
+| --------------------- | ---------------------- | ------ | ------- |
+| **questdb-image-tag** | QuestDB image version. | string | 6.5.4   |
 
 ## Local Deployment
 
-First clone the repository simply run below command after launching `monkd`:
-:
+| First clone the repository simply run below command after launching `monkd`: |
+| :--------------------------------------------------------------------------: |
 
 ```bash
 ➜  monk load MANIFEST
@@ -89,7 +82,6 @@ group     questdb/stack    local       -        -
 ```
 
 This will start the entire questdb/stack.
-
 
 ## Cloud Deployment
 
@@ -132,7 +124,6 @@ Your cluster has been created successfully.
 ```
 
 Once cluster is ready execute the same command as for local and select your cluster (the option will appear automatically).
-
 
 ```bash
 ➜  monk load MANIFEST

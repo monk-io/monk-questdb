@@ -1,5 +1,6 @@
 ---
 namespace: questdb
+
 questdb-common:
   defines: runnable
   metadata:
@@ -10,8 +11,7 @@ questdb-common:
       QuestDB is an open-source relational database designed for high-performance time-series data analysis. 
       It provides a combination of columnar storage, indexing, and a query execution engine optimized for time-series data. 
       The primary focus of QuestDB is to enable fast and efficient querying and analysis of time-series datasets, which are typically characterized by large volumes of data with timestamps.
-    tags: database, sql, relational database, indexing, query, time-series, replication,
-      clustering
+    tags: database, sql, relational database, indexing, query, time-series, replication, clustering
     website: https://questdb.io/
     source: https://github.com/questdb/questdb
     publisher: monk.io
@@ -39,7 +39,8 @@ questdb-common:
     questdb:
       image: questdb/questdb
       image-tag: <- `${questdb-image}`
-      paths: ['<- `${monk-volume-path}/questdb/db:/var/lib/questdb/db`']
+      paths:
+        - <- `${monk-volume-path}/questdb/db:/var/lib/questdb/db`
   files:
     server-config:
       container: questdb
@@ -55,6 +56,7 @@ questdb-common:
     questdb-image:
       value: <- $questdb-image-tag default("6.5.4")
       type: string
+
 questdb:
   defines: runnable
   inherits: questdb/questdb-common

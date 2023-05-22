@@ -1,3 +1,0 @@
-REPO monk-questdb
-LOAD questdb.yaml stack.yaml
-RESOURCES files/server.conf files/log.conf

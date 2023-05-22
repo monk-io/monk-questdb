@@ -1,2 +1,3 @@
-REPO monk-questbd
-DIR questdb questdb-persistent-volume
+REPO monk-questdb
+LOAD questdb.yaml
+RESOURCES files/server.conf files/log.conf

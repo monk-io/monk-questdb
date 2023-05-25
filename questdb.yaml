@@ -11,7 +11,7 @@ questdb-common:
       QuestDB is an open-source relational database designed for high-performance time-series data analysis. 
       It provides a combination of columnar storage, indexing, and a query execution engine optimized for time-series data. 
       The primary focus of QuestDB is to enable fast and efficient querying and analysis of time-series datasets, which are typically characterized by large volumes of data with timestamps.
-    tags: database, sql, relational database, indexing, query, time-series, replication, clustering
+    tags: relational database, indexing, time-series, query, clustering, replication, sql
     website: https://questdb.io/
     source: https://github.com/questdb/questdb
     publisher: monk.io

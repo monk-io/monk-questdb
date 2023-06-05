@@ -38,7 +38,7 @@ questdb-common:
     defines: containers
     questdb:
       image: questdb/questdb
-      image-tag: <- `${questdb-image}`
+      image-tag: <- $questdb-image
       paths:
         - <- `${monk-volume-path}/questdb/db:/var/lib/questdb/db`
   files:
